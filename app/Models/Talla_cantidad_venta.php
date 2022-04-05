@@ -11,6 +11,7 @@ class Talla_cantidad_venta extends Model
 
     protected $fillable = [
         'venta_id',
+        'producto_id',
         'talla',
         'cantidad',
     ];

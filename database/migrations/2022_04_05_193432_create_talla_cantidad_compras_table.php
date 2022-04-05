@@ -16,8 +16,12 @@ return new class extends Migration
         Schema::create('talla_cantidad_compras', function (Blueprint $table) {
             $table->id();
             $table->integer('compra_id');
+            $table->integer('producto_id');
             $table->string('talla');
             $table->integer('cantidad');
+            $table->integer('defectuosos')->default(0);
+            $table->float('precio', 4, 2);
+            $table->integer('provider_id');   //Proveedor
             $table->timestamps();
         });
     }

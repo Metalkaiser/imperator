@@ -11,7 +11,11 @@ class Talla_cantidad_compra extends Model
 
     protected $fillable = [
         'compra_id',
+        'producto_id',
         'talla',
         'cantidad',
+        'defectuosos',
+        'precio',
+        'provider_id',
     ];
 }

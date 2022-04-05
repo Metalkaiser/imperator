@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('talla_cantidad_ventas', function (Blueprint $table) {
             $table->id();
             $table->integer('venta_id');
+            $table->integer('producto_id');
             $table->string('talla');
             $table->integer('cantidad');
             $table->timestamps();

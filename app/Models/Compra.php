@@ -10,10 +10,6 @@ class Compra extends Model
     use HasFactory;
 
     protected $fillable = [
-        'producto_id',
-        'defectuosos',
-        'precio',
-        'provider_id',
         'carrier_id',
         'costo_envio',
         'total',
