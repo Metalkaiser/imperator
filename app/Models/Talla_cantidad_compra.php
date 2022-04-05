@@ -18,4 +18,15 @@ class Talla_cantidad_compra extends Model
         'precio',
         'provider_id',
     ];
+
+    public function carrier()
+    {
+        return $this->belongsTo(Provider::class);
+    }
+
+    public function productos()
+    {
+        return $this->belongsTo(Producto::class);
+    }
+
 }

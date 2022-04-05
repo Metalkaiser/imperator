@@ -15,4 +15,19 @@ class Compra extends Model
         'total',
         'status',
     ];
+
+    public function carrier()
+    {
+        return $this->belongsTo(Carrier::class);
+    }
+
+    public function compras()
+    {
+        return $this->hasMany(Talla_cantidad_compra::class);
+    }
+
+    public function pagos()
+    {
+        return $this->hasMany(Pago_compra::class);
+    }
 }

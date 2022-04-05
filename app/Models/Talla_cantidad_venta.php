@@ -15,4 +15,9 @@ class Talla_cantidad_venta extends Model
         'talla',
         'cantidad',
     ];
+
+    public function productos()
+    {
+        return $this->belongsTo(Producto::class);
+    }
 }

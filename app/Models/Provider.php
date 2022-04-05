@@ -13,4 +13,9 @@ class Provider extends Model
         'nombre',
         'url',
     ];
+
+    public function compras()
+    {
+        return $this->hasMany(Compra::class);
+    }
 }

@@ -12,4 +12,9 @@ class Plataforma extends Model
     protected $fillable = [
         'nombre',
     ];
+
+    public function ventas()
+    {
+        return $this->belongsTo(Venta::class);
+    }
 }

@@ -16,4 +16,9 @@ class Promo extends Model
         'inicio',
         'fin',
     ];
+
+    public function ventas()
+    {
+        return $this->hasMany(Venta::class);
+    }
 }
