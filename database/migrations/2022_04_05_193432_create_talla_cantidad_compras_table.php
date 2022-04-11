@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('talla');
             $table->integer('cantidad');
             $table->integer('defectuosos')->default(0);
-            $table->float('precio', 4, 2);
+            $table->string('precio');
             $table->integer('provider_id');   //Proveedor
             $table->timestamps();
         });

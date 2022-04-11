@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
             $table->integer('carrier_id');     //Empresa de envíos en Miami
-            $table->float('costo_envio', 4, 2);
-            $table->float('total', 5, 2);
-            $table->string('status');           //Estado de la compra
+            $table->string('costo_envio')->nullable();
+            $table->string('total');
+            $table->string('status')->default('China');           //Estado de la compra
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('compra_id');
             $table->string('tipo');             //Plataforma de pago usada
             $table->string('referencia');       //Código de referencia de pago
-            $table->float('monto', 6, 2);
+            $table->string('monto');
             $table->string('moneda');
             $table->timestamps();
         });

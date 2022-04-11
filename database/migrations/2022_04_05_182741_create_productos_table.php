@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->integer('provider_id');
             $table->text('descripcion')->nullable();
-            $table->float('precio', 4, 2);
+            $table->string('precio');
             $table->softDeletes();
             $table->timestamps();
         });
