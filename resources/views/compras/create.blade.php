@@ -226,7 +226,8 @@
 		$("#formid").on('submit', function (event) {
 			var validated = true;
 			var allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'bmp'];
-			var mercanciaArr = mercRep = tallaRep = tallasArr = [];
+			var mercanciaArr = mercRep = tallaRep = [];
+			var tallasArr = [];
 			var p_arr = [];
 			var texto = title = icon = "";
 			var cuentaprod = cuentatalla = exists = 0;
@@ -289,6 +290,18 @@
 						cuentaprod++;
 					}
 				}
+				//Validación de tallas
+				tallasArr[index] = [];
+				$("[id^='tallas']").eq(index).find("[id^='talla']").each(function(a,b){
+					if (tallasArr[index].includes(b.value)) {
+						validated = false;
+						icon ='warning';
+						title = 'Tallas duplicadas';
+						texto = "Hay tallas repetidas en alguno de los productos. Verifique las tallas en el producto " + (index + 1);
+					}else {
+						tallasArr[index].push(b.value);
+					}
+				});
 			});
 			if (cuentaprod && validated || exists && validated) {
 				validated = false;
