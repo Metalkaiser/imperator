@@ -31,9 +31,16 @@ class ProductoController extends Controller
                     $cantidadTallas[$productos->codigo][$value->talla] = $value->cantidad;
                 }
             }
+            //Comienza If de prueba
+                if ($productos->compras == "[]") {
+                    $arrTalla = $cantidadTallas = array();
+                }else {
+                    
             $arrTalla[$productos->codigo] = array_unique($arrTalla[$productos->codigo]);
             sort($arrTalla[$productos->codigo]);
             $arrTalla[$productos->codigo] = implode(",", $arrTalla[$productos->codigo]);    
+                }
+            //Termina If de prueba
         /*  Termina Listado de tallas por producto    */
         }
 
