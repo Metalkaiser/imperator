@@ -13,3 +13,5 @@ require('./bootstrap');
  */
 
 require('./components/Example');
+
+import Swal from "sweetalert2";
