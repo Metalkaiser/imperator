@@ -125,9 +125,7 @@
 			+ t_l
 			+ "]\">Imagen del producto</label><input type=\"file\" id=\"imagen["
 			+ t_l
-			+ "]\" name=\"imagen["
-			+ t_l
-			+ "]\" accept=\"image/x-png,image/gif,image/jpeg\"></div></div>"
+			+ "]\" name=\"imagen[]\" accept=\"image/x-png,image/gif,image/jpeg\"></div></div>"
 			+ form_group
 			+ " proveedorselect["
 			+ t_l
@@ -314,6 +312,7 @@
 				}
 			}
 			//Terminan las validaciones
+			//Se muestra un alerta si hay algún problema
 			if (!(validated)) {
 				event.preventDefault();
 				Swal.fire({
@@ -321,10 +320,6 @@
 					title: title,
 					text: texto,
 				});
-				console.log("No se hizo submit");
-			}else {
-				event.preventDefault();
-				console.log("Haciendo submit");
 			}
 		});
 	});
@@ -353,7 +348,7 @@
 	</article>
 	<hr>
 	<article id="product-form">
-		<form method="POST" action="{{route('compras.store')}}" id="formid">
+		<form method="POST" action="{{route('compras.store')}}" enctype="multipart/form-data" id="formid">
 			@csrf
 			<div id="productos">
 				<div class="productos">
@@ -384,7 +379,7 @@
 						</div>
 						<div class="form-group">
 							<label for="imagen[0]">Imagen del producto</label>
-							<input type="file" id="imagen[0]" name="imagen[0]" accept="image/x-png,image/gif,image/jpeg">
+							<input type="file" id="imagen[0]" name="imagen[]" accept="image/x-png,image/gif,image/jpeg">
 						</div>
 					</div>
 					<div class="form-group">

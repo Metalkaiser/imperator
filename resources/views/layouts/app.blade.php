@@ -80,6 +80,17 @@
         </nav>
 
         <main class="py-4">
+            @if (Session::has('success'))
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <strong>Éxito !</strong> {{ session('success') }}
+                </div>
+            @endif
+
+            @if (Session::has('error'))
+                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert" style="width: 50%; margin: auto;">
+                    <strong>Error !</strong> {{ session('error') }}
+                </div>
+            @endif
             @yield('content')
         </main>
     </div>

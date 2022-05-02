@@ -12,7 +12,6 @@ class Carrier extends Model
     protected $fillable = [
         'nombre',
         'casillero',
-        'user_id',
     ];
 
     public function user()

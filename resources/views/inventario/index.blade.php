@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('styles')
+<style type="text/css">
+	.img-producto {
+		height: 100px;
+		width: 100px;
+	}
+</style>
+@endsection
+
 @section('content')
 <section>
 	<article>
@@ -32,15 +41,15 @@
 			<tbody>
 				@foreach($productos as $producto)
 				<tr>
-					<th>
-						<img src="{{asset($producto->codigo)}}" alt="{{$producto->nombre}}">
+					<th class="text-center">
+						<img class="img-producto" src="<?php echo asset('imagenes/' . $producto->nombre) . '.jpg'; ?>" alt="{{$producto->nombre}}">
 					</th>
-					<th>{{$producto->codigo}}</th>
-					<th>{{$producto->nombre}}</th>
-					<th>{{$tallas[$producto->codigo]}}</th>
-					<th>{{array_sum($cantidades[$producto->codigo])}}</th>
-					<th>{{$producto->precio}}</th>
-					<th>
+					<th class="align-middle">{{$producto->codigo}}</th>
+					<th class="align-middle">{{$producto->nombre}}</th>
+					<th class="align-middle">{{$tallas[$producto->codigo]}}</th>
+					<th class="align-middle">{{array_sum($cantidades[$producto->codigo])}}</th>
+					<th class="align-middle">{{$producto->precio}}</th>
+					<th class="align-middle">
 						<button class="btn btn-outline-info" type="button">Detalles</button>
 					</th>
 				</tr>

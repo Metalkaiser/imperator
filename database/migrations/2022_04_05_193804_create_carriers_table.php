@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->text('casillero');
-            $table->integer('user_id');
             $table->timestamps();
         });
     }
