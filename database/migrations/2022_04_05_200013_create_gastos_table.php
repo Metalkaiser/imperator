@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('gastos', function (Blueprint $table) {
             $table->id();
             $table->string('motivo');
-            $table->float('monto', 5, 2);
+            $table->string('monto');
             $table->string('moneda');
             $table->text('descripcion')->nullable();
             $table->timestamps();

@@ -11,6 +11,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
+    <script defer src="{{ asset('assets/sweetalert2.all.min.js') }}"></script>
+    @yield('scripts')
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,6 +21,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('styles')
 </head>
 <body>
     <div id="app">
@@ -76,6 +80,17 @@
         </nav>
 
         <main class="py-4">
+            @if (Session::has('success'))
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <strong>Éxito !</strong> {{ session('success') }}
+                </div>
+            @endif
+
+            @if (Session::has('error'))
+                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert" style="width: 50%; margin: auto;">
+                    <strong>Error !</strong> {{ session('error') }}
+                </div>
+            @endif
             @yield('content')
         </main>
     </div>

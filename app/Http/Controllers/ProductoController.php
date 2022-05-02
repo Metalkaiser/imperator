@@ -8,13 +8,48 @@ use Illuminate\Http\Request;
 class ProductoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la lista de inventario en /inventario
+     *  $arrTalla: string de tallas por producto
+     *  $lista: listado de productos
+     *  $cantidadTallas: cantidad en inventario por tallas
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return Producto::first();
+        $lista = Producto::paginate(20);
+        $arrTalla = $cantidadTallas = array();
+
+        /*  Comienza Listado de tallas por producto    */
+        foreach ($lista as $indice => $productos) {
+            foreach ($productos->compras as $key => $value) {
+                //Se definen las tallas de cada producto
+                $arrTalla[$productos->codigo][$key] = $value->talla;
+                if (array_key_exists($productos->codigo, $cantidadTallas) && array_key_exists($value->talla, $cantidadTallas[$productos->codigo])) {
+                    $cantidadTallas[$productos->codigo][$value->talla] += $value->cantidad;
+                }else {
+                    $cantidadTallas[$productos->codigo][$value->talla] = $value->cantidad;
+                }
+            }
+            //Comienza If de prueba
+                if ($productos->compras == "[]") {
+                    $arrTalla = $cantidadTallas = array();
+                }else {
+                    
+            $arrTalla[$productos->codigo] = array_unique($arrTalla[$productos->codigo]);
+            sort($arrTalla[$productos->codigo]);
+            $arrTalla[$productos->codigo] = implode(",", $arrTalla[$productos->codigo]);    
+                }
+            //Termina If de prueba
+        /*  Termina Listado de tallas por producto    */
+        }
+
+        return view('inventario.index',
+            [
+                'productos' => $lista,
+                'tallas' => $arrTalla,
+                'cantidades' => $cantidadTallas
+            ]);
     }
 
     /**
