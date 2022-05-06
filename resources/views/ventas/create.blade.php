@@ -102,7 +102,7 @@
 		let form_group = "<div class=\"form-group\"><label for=\"";
 		var optionsprod = optionsprov = "";
 		var productos = <?php echo json_encode($productos); ?>;
-		$(productos.data).each(function(){
+		$(productos).each(function(){
 			optionsprod += "<option value=\"" + this.id + "\">" + this.nombre + "</option>"
 		});
 		var nuevo = "<div class=\"productos\"><div><h5 class=\"titulotalla\">Producto"

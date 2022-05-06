@@ -17,7 +17,7 @@
 	<article>
 		<a href="{{route('ventas.create')}}" class="btn btn-outline-success">+ Agregar venta de producto</a>
 	</article>
-	@if(count($productos) == 0)
+	@if(count($paginas) == 0)
 	<article>
 		<h3>No hay nada en el inventario</h3>
 		<h3>Agrega una compra al inventario</h3>
@@ -39,7 +39,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($productos as $producto)
+				@foreach($paginas as $producto)
 				<tr>
 					<th class="text-center">
 						<img class="img-producto" src="<?php echo asset('imagenes/' . $producto->nombre) . '.jpg'; ?>" alt="{{$producto->nombre}}">
@@ -64,7 +64,7 @@
 		</table>
 	</article>
 	<article>
-		{{ $productos->links() }}
+		{{ $paginas->links() }}
 	</article>
 </section>
 @endsection

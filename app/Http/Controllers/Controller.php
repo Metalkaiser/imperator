@@ -27,7 +27,8 @@ class Controller extends BaseController
             array_push($ids, $producto->id);
         }
         $promos = Promo::all();
-        $lista = Producto::orderBy('nombre')->paginate(20);
+        $pagina = Producto::orderBy('nombre')->paginate(10);
+        $lista = Producto::orderBy('nombre')->get();
         $arrTalla = $cantidadTallas = $optTallas = array();
 
         /*  Comienza Listado de tallas por producto    */
@@ -77,6 +78,7 @@ class Controller extends BaseController
             'cantidades' => $cantidadTallas,
             'opciones' => $optTallas,
             'promos' => $promos,
+            'paginas' => $pagina,
         ];
     }
 }
