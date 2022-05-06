@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('envio_ventas', function (Blueprint $table) {
             $table->id();
             $table->integer('venta_id');
-            $table->string('tipo');
-            $table->string('precio');
+            $table->string('empresa')->nullable();
+            $table->string('rastreo')->nullable();
+            $table->string('precio')->nullable();
             $table->timestamps();
         });
     }

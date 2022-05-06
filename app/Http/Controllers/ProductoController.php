@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Producto;
+use Illuminate\Support\Facades\Artisan;
 
 class ProductoController extends Controller
 {
@@ -17,39 +19,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $lista = Producto::paginate(20);
-        $arrTalla = $cantidadTallas = array();
-
-        /*  Comienza Listado de tallas por producto    */
-        foreach ($lista as $indice => $productos) {
-            foreach ($productos->compras as $key => $value) {
-                //Se definen las tallas de cada producto
-                $arrTalla[$productos->codigo][$key] = $value->talla;
-                if (array_key_exists($productos->codigo, $cantidadTallas) && array_key_exists($value->talla, $cantidadTallas[$productos->codigo])) {
-                    $cantidadTallas[$productos->codigo][$value->talla] += $value->cantidad;
-                }else {
-                    $cantidadTallas[$productos->codigo][$value->talla] = $value->cantidad;
-                }
-            }
-            //Comienza If de prueba
-                if ($productos->compras == "[]") {
-                    $arrTalla = $cantidadTallas = array();
-                }else {
-                    
-            $arrTalla[$productos->codigo] = array_unique($arrTalla[$productos->codigo]);
-            sort($arrTalla[$productos->codigo]);
-            $arrTalla[$productos->codigo] = implode(",", $arrTalla[$productos->codigo]);    
-                }
-            //Termina If de prueba
-        /*  Termina Listado de tallas por producto    */
-        }
-
-        return view('inventario.index',
-            [
-                'productos' => $lista,
-                'tallas' => $arrTalla,
-                'cantidades' => $cantidadTallas
-            ]);
+        $data = $this->tallaslist();
+        return view('inventario.index',$data);
     }
 
     /**
@@ -117,4 +88,10 @@ class ProductoController extends Controller
     {
         //
     }
+
+    public function dbbackup(){
+        Artisan::call('database:backup');
+        return response()->json('Respaldo de base de datos exitoso');
+    }
+    
 }

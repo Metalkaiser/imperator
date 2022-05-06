@@ -14,6 +14,7 @@ class Talla_cantidad_venta extends Model
         'producto_id',
         'talla',
         'cantidad',
+        'precio',
     ];
 
     public function productos()

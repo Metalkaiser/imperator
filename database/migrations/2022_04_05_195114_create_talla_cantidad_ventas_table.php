@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('producto_id');
             $table->string('talla');
             $table->integer('cantidad');
+            $table->string('precio');           //Precio de venta por unidad
             $table->timestamps();
         });
     }

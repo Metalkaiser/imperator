@@ -11,7 +11,8 @@ class Envio_venta extends Model
 
     protected $fillable = [
         'venta_id',
-        'tipo',
+        'empresa',
+        'rastreo',
         'precio',
     ];
 }

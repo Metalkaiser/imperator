@@ -15,7 +15,7 @@
 		<a href="{{route('compras.create')}}" class="btn btn-outline-primary">+ Agregar compra al inventario</a>
 	</article>
 	<article>
-		<button class="btn btn-outline-success">+ Agregar venta de producto</button>
+		<a href="{{route('ventas.create')}}" class="btn btn-outline-success">+ Agregar venta de producto</a>
 	</article>
 	@if(count($productos) == 0)
 	<article>
@@ -46,8 +46,14 @@
 					</th>
 					<th class="align-middle">{{$producto->codigo}}</th>
 					<th class="align-middle">{{$producto->nombre}}</th>
-					<th class="align-middle">{{$tallas[$producto->codigo]}}</th>
-					<th class="align-middle">{{array_sum($cantidades[$producto->codigo])}}</th>
+					<th class="align-middle">
+						@if($tallas[$producto->codigo] == 0)
+						Varias
+						@else
+						{{$tallas[$producto->codigo]}}
+						@endif
+					</th>
+					<th class="align-middle">{{array_sum($cantidades[$producto->id])}}</th>
 					<th class="align-middle">{{$producto->precio}}</th>
 					<th class="align-middle">
 						<button class="btn btn-outline-info" type="button">Detalles</button>

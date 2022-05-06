@@ -31,9 +31,9 @@ class CompraController extends Controller
      */
     public function create()
     {
-        $productos = Producto::all();
-        $proveedores = Provider::all();
-        $carriers = Carrier::all();
+        $productos = Producto::orderBy('nombre')->get();
+        $proveedores = Provider::orderBy('nombre')->get();
+        $carriers = Carrier::orderBy('casillero')->get();
         return view('compras.create', ['proveedores' => $proveedores, 'carriers' => $carriers, 'productos' => $productos]);
     }
 
@@ -45,6 +45,7 @@ class CompraController extends Controller
      */
     public function store(Request $request)
     {
+        $prod_arr = array();
         //Datos generales de la compra
         if ($request->casilleroselect == "nuevo") {     //si el casillero es nuevo
             $casillero = new Carrier;
@@ -82,7 +83,7 @@ class CompraController extends Controller
 
         //Comienzo de mapeo de cada producto
         foreach ($request->mercancias as $indice => $mercancia) {
-
+            
             if ($request->proveedorselect[$indice] == "nuevo") {     //si es un proveedor nuevo
                 $proveedor = new Provider;
                 $proveedor->nombre = $request->proveedor[$indice];
@@ -101,6 +102,7 @@ class CompraController extends Controller
                 $producto->descripcion = $request->descripcion[$indice];
                 $producto->precio = $request->precio[$indice];
                 $producto->save();
+                array_push($prod_arr, $request->nombre[$indice]);
             }else {     //si es un producto existente
                 $producto = Producto::find($mercancia);
                 $producto->provider_id = $provider_id;    //id de proveedor
@@ -119,13 +121,18 @@ class CompraController extends Controller
                 $talla->save();
             }
 
+
         }   //Fin de mapeo de cada producto
 
         if ($request->hasFile('imagen')) {
+            $offset = 0;
+            $count_p = array();
             foreach ($request->file('imagen') as $item => $imagen) {
-                $filename = $request->nombre[$item] . "." . $imagen->extension();
+                $filename = $prod_arr[$offset] . "." . $imagen->extension();
                 $imagen->move(public_path('imagenes'), $filename);
                 $files[] = $filename;
+                array_push($count_p, $filename);
+                $offset++;
             }
         }
 

@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('pago_ventas', function (Blueprint $table) {
             $table->id();
             $table->integer('venta_id');
-            $table->string('tipo');             //Plataforma de pago usada
-            $table->string('referencia');       //Código de referencia de pago
+            $table->string('plat_pago');             //Plataforma de pago usada
+            $table->string('referencia')->nullable();       //Código de referencia de pago
             $table->string('monto');
             $table->string('moneda');
             $table->timestamps();

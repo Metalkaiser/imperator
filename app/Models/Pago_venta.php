@@ -12,7 +12,7 @@ class Pago_venta extends Model
 
     protected $fillable = [
         'venta_id',
-        'tipo',
+        'plat_pago',
         'referencia',
         'monto',
         'moneda',

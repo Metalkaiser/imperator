@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
 	        UserSeeder::class,
             carrierSeeder::class,
             ProviderSeeder::class,
+            //ProductoSeeder::class,
+            PlataformaSeeder::class,
 	    ]);
     }
 }

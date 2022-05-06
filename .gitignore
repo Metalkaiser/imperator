@@ -1,7 +1,6 @@
 /node_modules
 /public/hot
 /public/storage
-/public/imagenes/
 /storage/*.key
 /vendor
 .env
@@ -15,4 +14,4 @@ yarn-error.log
 /.idea
 /.vscode
 /database/seeders
-
+imperator.sql
