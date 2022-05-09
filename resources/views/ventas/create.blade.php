@@ -384,7 +384,7 @@
 					<select id="promo" name="promo">
 						<option disabled selected value="">Seleccione una promoción</option>
 						@foreach($promos as $i => $promo)
-						<option value="{{$promo->id}}">"{{$promo->nombre}}"</option>
+						<option value="{{$promo->id}}">{{$promo->nombre}}</option>
 						@endforeach
 					</select>
 				</div>

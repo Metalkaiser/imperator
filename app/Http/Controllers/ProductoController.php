@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Producto;
+use App\Models\Promo;
 use Illuminate\Support\Facades\Artisan;
 
 class ProductoController extends Controller
@@ -61,9 +62,10 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function edit(Producto $producto)
+    public function edit($id)
     {
-        //
+        $producto = Producto::find($id);
+        return view('inventario.editar_producto', ['producto' => $producto]);
     }
 
     /**
@@ -89,9 +91,37 @@ class ProductoController extends Controller
         //
     }
 
-    public function dbbackup(){
+
+    /* Llama al comando artisan para hacer un respaldo
+     * de la información en la base de datos.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function dbbackup()
+    {
         Artisan::call('database:backup');
         return response()->json('Respaldo de base de datos exitoso');
+    }
+
+    public function promos()
+    {
+        $promos = Promo::paginate(10);
+        return view('inventario.promos', ['promos' => $promos]);
+    }
+
+    public function nuevapromo(Request $request)
+    {
+        $promo = new Promo;
+        $promo->codigo = $request->codigo;
+        $promo->nombre = $request->nombre;
+        $promo->descripcion = $request->descripcion;
+        $promo->inicio = $request->inicio;
+        $promo->fin = $request->fin;
+        if ($promo->save()) {
+            return response()->json($promo);
+        }else {
+            return response()->json('Error','Error al intentar crear promoción',500);
+        }
     }
     
 }

@@ -9,6 +9,53 @@
 </style>
 @endsection
 
+@section('scripts')
+<script type="text/javascript">
+	function mostrar(pid) {
+		let productos = <?php echo json_encode($paginas); ?>;
+		let cantidades = <?php echo json_encode($cantidades); ?>;
+		let producto = {};
+		$(productos.data).each(function(){
+			this.id == pid ? producto = this : "";
+		});
+		var tallasObj = cantidades[pid];
+		var tallas = Object.keys(tallasObj);
+		var cantidad = Object.values(tallasObj);
+		var filas = "";
+		var talla = "";
+		$(tallas).each(function(index,item){
+			if (item == 0) {
+				talla = "Varias"
+			}else {
+				talla = ""+item;
+			}
+			filas += '<tr><th class="text-center">'+talla+'</th>' +
+			'<th class="text-center">'+cantidad[index]+'</th>' +
+			'</tr>';
+		});
+		Swal.fire({
+			title: producto.nombre,
+			imageUrl: 'imagenes/' + producto.nombre + '.jpg',
+			imageWidth: 350,
+			imageAlt: producto.nombre,
+			showCancelButton: true,
+			confirmButtonText: 'Editar',
+			cancelButtonText: 'Cerrar',
+			html:
+			    '<div><p>'+producto.descripcion+'</p>' +
+				'<table class="table table-hover table-sm"><thead>' +
+				'<tr><th scope="col">Talla</th>' +
+				'<th scope="col">Cantidad</th></tr>' +
+				'</thead><tbody>'+filas+'</tbody></table></div>',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.location = "/inventario/" + producto.id + "/edit";
+			}
+		});
+	}
+</script>
+@endsection
+
 @section('content')
 <section>
 	<article>
@@ -56,7 +103,7 @@
 					<th class="align-middle">{{array_sum($cantidades[$producto->id])}}</th>
 					<th class="align-middle">{{$producto->precio}}</th>
 					<th class="align-middle">
-						<button class="btn btn-outline-info" type="button">Detalles</button>
+						<button class="btn btn-outline-info" type="button" onclick="mostrar({{$producto->id}})">Detalles</button>
 					</th>
 				</tr>
 				@endforeach

@@ -73,12 +73,12 @@ class Controller extends BaseController
         }
 
         return [
-            'productos' => $lista,
-            'tallas' => $arrTalla,
-            'cantidades' => $cantidadTallas,
-            'opciones' => $optTallas,
-            'promos' => $promos,
-            'paginas' => $pagina,
+            'productos' => $lista,              //Lista de productos en el inventario
+            'paginas' => $pagina,               //Lista paginada de productos
+            'tallas' => $arrTalla,              //String de tallas totales por producto
+            'cantidades' => $cantidadTallas,    //Cantidades disponibles por talla, por producto
+            'opciones' => $optTallas,           //Array de tallas por producto
+            'promos' => $promos,                //Promociones en la DB
         ];
     }
 }
