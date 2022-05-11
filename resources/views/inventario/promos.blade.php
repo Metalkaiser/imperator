@@ -76,7 +76,12 @@
 @section('content')
 <section>
 	<article>
-		<button class="btn btn-outline-primary" type="button" onclick="crear()">+ Crear una promoción</a>
+		<div>
+			<a href="/" class="btn btn-outline-danger">Volver atrás</a>
+		</div>
+		<div>
+			<button class="btn btn-outline-primary" type="button" onclick="crear()">+ Crear una promoción</button>
+		</div>
 	</article>
 	@if(count($promos) == 0)
 	<article>

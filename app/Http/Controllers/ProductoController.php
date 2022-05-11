@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Producto;
 use App\Models\Promo;
 use Illuminate\Support\Facades\Artisan;
+use File;
 
 class ProductoController extends Controller
 {
@@ -75,9 +76,26 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request,$id)
     {
-        //
+        $producto = Producto::find($id);
+        $producto->codigo = $request->codigo;
+        $producto->nombre = $request->nombre;
+        $producto->descripcion = $request->descripcion;
+        $producto->precio = $request->precio;
+        if ($request->imageselect == "si") {
+            $filename = $request->nombre.'.jpg';
+            $file = public_path('imagenes')."/".$filename;
+            File::delete($file);
+            $imagen = $request->file('imagen');
+            $imagen->move(public_path('imagenes'), $filename);
+            return "Borrado";
+        }
+        if ($producto->save()) {
+            return redirect()->route('inventario.index')->with('success', 'Información del producto guardada.');
+        }else {
+            return redirect()->back()->with('error', 'Ha ocurrido un error.');
+        }
     }
 
     /**

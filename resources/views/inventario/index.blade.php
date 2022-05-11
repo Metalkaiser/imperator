@@ -59,10 +59,17 @@
 @section('content')
 <section>
 	<article>
-		<a href="{{route('compras.create')}}" class="btn btn-outline-primary">+ Agregar compra al inventario</a>
-	</article>
-	<article>
-		<a href="{{route('ventas.create')}}" class="btn btn-outline-success">+ Agregar venta de producto</a>
+		<div>
+			<a href="/" class="btn btn-outline-danger">Volver atrás</a>
+		</div>
+		<div>
+			<div>
+				<a href="{{route('compras.create')}}" class="btn btn-outline-primary">+ Agregar compra al inventario</a>
+			</div>
+			<div>
+				<a href="{{route('ventas.create')}}" class="btn btn-outline-success">+ Agregar venta de producto</a>
+			</div>
+		</div>
 	</article>
 	@if(count($paginas) == 0)
 	<article>
