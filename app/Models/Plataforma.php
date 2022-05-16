@@ -15,6 +15,6 @@ class Plataforma extends Model
 
     public function ventas()
     {
-        return $this->belongsTo(Venta::class);
+        return $this->hasMany(Venta::class);
     }
 }

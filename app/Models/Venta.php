@@ -26,21 +26,26 @@ class Venta extends Model
 
     public function envios()
     {
-        return $this->hasMany(Envio_venta::class);
+        return $this->hasOne(Envio_venta::class);
     }
 
     public function pagos()
     {
-        return $this->hasMany(Pago_venta::class);
+        return $this->hasOne(Pago_venta::class);
     }
 
     public function promociones()
     {
-        return $this->belongsTo(Promo::class);
+        return $this->belongsTo(Promo::class, 'promo_id');
     }
 
     public function plataformas()
     {
-        return $this->belongsTo(Plataforma::class);
+        return $this->belongsTo(Plataforma::class, 'plataforma_id');
+    }
+
+    public function productos()
+    {
+        return $this->belongsToMany(Producto::class, 'talla_cantidad_ventas');
     }
 }

@@ -23,7 +23,7 @@
                 <li><a href="/inventario">Inventario</a></li>
                 <li><a href="/promociones">Promociones</a></li>
                 <li><a href="#">Compras</a></li>
-                <li><a href="#">Ventas</a></li>
+                <li><a href="/ventas">Ventas</a></li>
             </ul>
         </div>
     </article>
