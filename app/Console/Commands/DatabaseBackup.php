@@ -45,7 +45,7 @@ class DatabaseBackup extends Command
         if(!File::exists($storageAt)) {
             File::makeDirectory($storageAt, 0755, true, true);
         }
-        $command = "".env('DB_DUMP_PATH', 'mysqldump')." --user=" . env('DB_USERNAME') ." --password=" . env('DB_PASSWORD') . " --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . " > " . $storageAt . $filename;
+        $command = "".env('DB_DUMP_PATH', 'mysqldump')." --column-statistics=0 --user=" . env('DB_USERNAME') ." --password=" . env('DB_PASSWORD') . " --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . " > " . $storageAt . $filename;
         $returnVar = NULL;
         $output = NULL;
         exec($command, $output, $returnVar);
