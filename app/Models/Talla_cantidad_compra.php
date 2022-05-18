@@ -19,14 +19,14 @@ class Talla_cantidad_compra extends Model
         'provider_id',
     ];
 
-    public function carrier()
+    public function proveedor()
     {
-        return $this->belongsTo(Provider::class);
+        return $this->belongsTo(Provider::class, 'provider_id');
     }
 
     public function productos()
     {
-        return $this->belongsTo(Producto::class);
+        return $this->belongsTo(Producto::class, 'producto_id');
     }
 
 }

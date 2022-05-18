@@ -272,7 +272,7 @@ class VentaController extends Controller
         $venta->status = $request->status;
         $venta->save();
 
-        return redirect()->route('ventas.index');
+        return redirect()->route('ventas.index')->with('success', 'Cambios guardados.');
     }
 
     /**

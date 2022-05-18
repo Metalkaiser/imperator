@@ -21,7 +21,8 @@ class CompraController extends Controller
      */
     public function index()
     {
-        //
+        $compras = Compra::orderBy('created_at')->paginate(20);
+        return view('compras.index', ['compras' => $compras]);
     }
 
     /**
@@ -147,7 +148,41 @@ class CompraController extends Controller
      */
     public function show(Compra $compra)
     {
-        //
+        $productos = $tallas = array();
+        foreach ($compra->compras as $indice => $talla) {
+            array_push($productos, $talla->productos->id);
+        }
+        $productos = array_unique($productos);
+
+        foreach ($productos as $key => $id) {
+            $tallas[$id] = Talla_cantidad_compra::where([
+                ['producto_id',$id],
+                ['compra_id',$compra->id]
+            ])->get();
+        }
+
+        $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+ 
+        $fecha = $dias[date('w',strtotime($compra->created_at))]
+        . ", " . date('d',strtotime($compra->created_at))
+        . " de "
+        . $meses[date('n',strtotime($compra->created_at))-1]
+        . " del " . date('Y',strtotime($compra->created_at));
+
+        $desglose = "";
+        $res = "<div><div><table class=\"table table-hover\"><thead><tr class=\"table-info\"><th>Fecha</th><th>Plataforma de pago</th><th>Total</th><th>Moneda</th><th>Casillero</th><th>Estado</th></tr></thead><tbody><tr>"."<td>".$fecha."</td><td>".$compra->pagos->tipo."</td><td>".$compra->total."</td><td>".$compra->pagos->moneda."</td><td>".$compra->carrier->casillero."</td><td>".($compra->status == "Tienda" ? "En inventario" : $compra->status)."</td></tr></tbody></table></div>";
+
+        foreach ($productos as $index => $id) {
+            $producto = Producto::find($id);
+            $desglose = $desglose . "<div><div><h4>".$producto->codigo." ".$producto->nombre."</h4><h5>Proveedor: ".$producto->provider->nombre."</h5></div><table class=\"table table-hover table-sm table-bordered\"><thead><tr><th>Talla</th><th>Cantidad</th><th>Defectuosos</th><th>Precio por unidad (China)</th></tr></thead><tbody>";
+            foreach ($tallas[$id] as $key => $value) {
+                $desglose = $desglose . "<tr><td>".($value->talla == 0 ? "Varias" : $value->talla)."</td><td>".$value->cantidad."</td><td>".$value->defectuosos."</td><td>".$value->precio."</td></tr>";
+            }
+             $desglose = $desglose . "</tbody></table></div>";
+        }
+
+        return response()->json($res . $desglose ."</div>");
     }
 
     /**
@@ -156,9 +191,20 @@ class CompraController extends Controller
      * @param  \App\Models\Compra  $compra
      * @return \Illuminate\Http\Response
      */
-    public function edit(Compra $compra)
+    public function edit($id)
     {
-        //
+        $compra = Compra::find($id);
+        $p_ids = array();
+        foreach ($compra->compras as $indice => $talla) {
+            array_push($p_ids, $talla->productos->id);
+        }
+        $p_ids = array_unique($p_ids);
+
+        $productos = Producto::whereIn('id',$p_ids)->get();
+        return view('compras.edit', [
+            'compra' => $compra,
+            'productos' => $productos,
+        ]);
     }
 
     /**
@@ -168,9 +214,22 @@ class CompraController extends Controller
      * @param  \App\Models\Compra  $compra
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Compra $compra)
+    public function update(Request $request, $id)
     {
-        //
+        $compra = Compra::find($id);
+        if (isset($request->talla)) {
+            foreach ($request->talla as $key => $value) {
+                if ($request->defectuosos[$key] == "") {
+                    return redirect()->back()->with('error', 'Llene todos los campos que haya marcado.');
+                }
+                $talla_defectuosa = Talla_cantidad_compra::find($key);
+                $talla_defectuosa->defectuosos = $request->defectuosos[$key];
+                $talla_defectuosa->save();
+            }
+        }
+        $compra->status = $request->status;
+        $compra->save();
+        return redirect()->route('compras.index')->with('success', 'Cambios guardados.');
     }
 
     /**
