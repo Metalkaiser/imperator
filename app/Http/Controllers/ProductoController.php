@@ -21,6 +21,11 @@ class ProductoController extends Controller
      */
     public function index()
     {
+        /*
+        9: 1
+        10: 4
+        12: 1
+        */
         $data = $this->tallaslist();
         return view('inventario.index',$data);
     }

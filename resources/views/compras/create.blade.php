@@ -258,6 +258,12 @@
 						$(item).css("background-color","lightpink");
 						validated = false;
 					}
+					if ($(item)[0].files[0].size > 1870848) {
+						validated = false;
+						icon = 'error';
+						title = 'Tamaño de imagen inválido';
+						texto = 'Solo se admiten imágenes que pesen menos de 2MB.';
+					}
 				});
 				if (c_err) {
 					var c_prod = "";

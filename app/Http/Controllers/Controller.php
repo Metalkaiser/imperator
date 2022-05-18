@@ -19,12 +19,13 @@ class Controller extends BaseController
             ->join('talla_cantidad_compras as A', 'A.producto_id', '=', 'productos.id')
             ->join('compras', 'compras.id', '=', 'A.compra_id')
             ->where('compras.status','Tienda')
-            ->select('productos.id')
+            ->select('compras.id as compras','productos.id as productos')
             ->get();
 
-        $ids = [];
-        foreach ($coincidencias as $indice => $producto) {
-            array_push($ids, $producto->id);
+        $ids = $c_ids = [];
+        foreach ($coincidencias as $coincidencia) {
+            array_push($ids, $coincidencia->productos);
+            array_push($c_ids, $coincidencia->compras);
         }
         $promos = Promo::all();
         $pagina = Producto::orderBy('nombre')->paginate(10);
@@ -32,22 +33,23 @@ class Controller extends BaseController
         $arrTalla = $cantidadTallas = $optTallas = array();
 
         /*  Comienza Listado de tallas por producto    */
-        foreach ($lista as $indice => $productos) {
-            foreach ($productos->compras as $key => $value) {
+        foreach ($lista as $indice => $productos) {     //Cada registro en la tabla productos
+            foreach ($productos->compras as $key => $value) {   //Cada compra por producto
                 //Se definen las tallas de cada producto
                 $arrTalla[$productos->codigo][$key] = $value->talla;
                 $optTallas[$productos->id][$key] = $value->talla;
-                if (array_key_exists($productos->codigo, $cantidadTallas) && array_key_exists($value->talla, $cantidadTallas[$productos->id])) {
-                    if (in_array($value->producto_id, $ids)) {
+                if (array_key_exists($productos->id, $cantidadTallas) && array_key_exists($value->talla, $cantidadTallas[$productos->id])) {
+
+                    if (in_array($value->producto_id, $ids) && in_array($value->compra_id, $c_ids)) {
                         $cantidadTallas[$productos->id][$value->talla] += $value->cantidad;
-                        $cantidadTallas[$productos->id][$value->talla] -= $value->defectuosos;
+                        //$cantidadTallas[$productos->id][$value->talla] -= $value->defectuosos;
                     }else {
                         $cantidadTallas[$productos->id][$value->talla] += 0;
                     }
                 }else {
-                    if (in_array($value->producto_id, $ids)) {
+                    if (in_array($value->producto_id, $ids) && in_array($value->compra_id, $c_ids)) {
                         $cantidadTallas[$productos->id][$value->talla] = $value->cantidad;
-                        $cantidadTallas[$productos->id][$value->talla] -= $value->defectuosos;
+                        //$cantidadTallas[$productos->id][$value->talla] -= $value->defectuosos;
                     }else {
                         $cantidadTallas[$productos->id][$value->talla] = 0;
                     }
@@ -58,6 +60,7 @@ class Controller extends BaseController
                     $cantidadTallas[$productos->id][$value->talla] -= $value->cantidad;
                 }
             }
+
             //Comienza If de prueba
                 if ($productos->compras == "[]") {
                     $arrTalla = $cantidadTallas = array();
