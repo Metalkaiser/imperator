@@ -17,12 +17,12 @@ use App\Http\Controllers\VentaController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('home');
+    return redirect()->route('panel');
 });
 
 Auth::routes(['register' => false]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/panel', [App\Http\Controllers\HomeController::class, 'index'])->name('panel');
 Route::get('/promociones', [App\Http\Controllers\ProductoController::class, 'promos'])->name('promos');
 Route::post('/promociones/crear', [App\Http\Controllers\ProductoController::class, 'nuevapromo']);
 

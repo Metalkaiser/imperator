@@ -21,11 +21,6 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        /*
-        9: 1
-        10: 4
-        12: 1
-        */
         $data = $this->tallaslist();
         return view('inventario.index',$data);
     }
@@ -57,9 +52,32 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function show(Producto $producto)
+    public function show(Request $request)
     {
-        //
+        $tallasObj = $request->cantidades[$request->producto['id']];
+        $tallas = array_keys($tallasObj);
+        $cantidad = array_values($tallasObj);
+        $filas = "";
+        $talla = "";
+
+        foreach ($tallas as $index => $item) {
+            if ($item == 0) {
+                $talla = "Varias";
+            }else {
+                $talla = "".$item;
+            }
+            $filas = $filas . '<tr><th class="text-center">'.$talla.'</th>'
+            .'<th class="text-center">'.$cantidad[$index].'</th>'
+            .'</tr>';
+        }
+
+        $res = '<div><p>'.$request->producto['descripcion'].'</p>'
+        .'<table class="table table-hover table-sm"><thead>'
+        .'<tr><th scope="col">Talla</th>'
+        .'<th scope="col">Cantidad</th></tr>'
+        .'</thead><tbody>'.$filas.'</tbody></table></div>';
+
+        return response()->json($res);
     }
 
     /**

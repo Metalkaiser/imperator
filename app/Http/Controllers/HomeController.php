@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Compra;
+use App\Models\Venta;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $ventas = Venta::where('created_at', '>=', date('Y-m-d', strtotime("-1 month")))->get();
+        $compras = Compra::where('created_at', '>=', date('Y-m-d', strtotime("-1 month")))->get();
+
+        return view('home',[
+            'ventas' => $ventas,
+            'compras' => $compras,
+        ]);
     }
 }

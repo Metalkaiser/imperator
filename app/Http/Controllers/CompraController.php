@@ -10,7 +10,6 @@ use App\Models\Pago_compra;
 use App\Models\Talla_cantidad_compra;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class CompraController extends Controller
 {
