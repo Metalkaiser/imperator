@@ -17,7 +17,7 @@ class VentaController extends Controller
      */
     public function index()
     {
-        $ventas = Venta::orderBy('created_at')->paginate(20);
+        $ventas = Venta::orderBy('created_at', 'desc')->paginate(10);
         return view('ventas.index', ['ventas' => $ventas]);
     }
 

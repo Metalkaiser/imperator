@@ -7,7 +7,10 @@ Iniciar sesión
 @section('content')
 <!--begin::Card-->
 <div class="card card-custom">
-    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+    <div class="text-center pt-5">
+        <div>
+            <img src="{{asset('imagenes/LOGO_LOGIN.png')}}" style="max-height: 150px; max-width: 80%;">
+        </div>
     </div>
     <div class="card-body">
         <form method="POST" action="{{ route('login') }}">

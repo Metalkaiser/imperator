@@ -43,35 +43,38 @@ Editando: {{$producto->nombre}}
 				<div class="form-group">
 					<label for="codigo">Código</label>
 					<br>
-					<input type="text" id="codigo" name="codigo" placeholder="Código" value="{{$producto->codigo}}" required>
+					<input class="form-control" type="text" id="codigo" name="codigo" placeholder="Código" value="{{$producto->codigo}}" required>
 				</div>
 				<div class="form-group">
 					<label for="nombre">Nombre del producto</label>
 					<br>
-					<input type="text" id="nombre" name="nombre" placeholder="Nombre del producto" value="{{$producto->nombre}}" required>
+					<input class="form-control" type="text" id="nombre" name="nombre" placeholder="Nombre del producto" value="{{$producto->nombre}}" required>
 				</div>
 				<div class="form-group">
 					<label for="descripcion">Descripcion</label>
 					<br>
-					<textarea id="descripcion" name="descripcion" placeholder="Descripcion" rows="4" required>{{$producto->descripcion}}</textarea>
+					<textarea class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion" rows="4" required>{{$producto->descripcion}}</textarea>
 				</div>
 				<div class="form-group">
 					<label for="precio">Precio de venta ($)</label>
 					<br>
-					<input type="text" id="precio" name="precio" placeholder="Precio de venta" value="{{$producto->precio}}" required>
+					<input class="form-control" type="text" id="precio" name="precio" placeholder="Precio de venta" value="{{$producto->precio}}" required>
 				</div>
 			</div>
 			<div>
 				<label for="imageselect">¿Quiere cambiar la imagen del producto?</label>
 				<br>
-				<select id="imageselect" name="imageselect" style="width: 100px;">
+				<select class="form-control" id="imageselect" name="imageselect">
 					<option value="no" selected>No</option>
 					<option value="si">Sí</option>
 				</select>
 			</div>
 				<div class="form-group" id="imageinput">
-					<label for="imagen">Seleccione una imagen</label>
-					<input type="file" id="imagen" name="imagen">
+					<div></div>
+					<div class="custom-file mt-8">
+						<input class="custom-file-input" type="file" id="imagen" name="imagen">
+						<label class="custom-file-label" for="imagen">Seleccione una imagen</label>
+					</div>
 				</div>
 			<div class="mt-5">
 				<button type="submit" class="btn btn-primary mt-5">Guardar cambios</button>

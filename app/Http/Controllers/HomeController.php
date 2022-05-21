@@ -26,8 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $ventas = Venta::where('created_at', '>=', date('Y-m-d', strtotime("-1 month")))->get();
-        $compras = Compra::where('created_at', '>=', date('Y-m-d', strtotime("-1 month")))->get();
+        $ventas = Venta::where('created_at', '>=', date('Y-m-d', strtotime("-1 month")))->orderBy('created_at', 'desc')->get();
+        $compras = Compra::where('created_at', '>=', date('Y-m-d', strtotime("-1 month")))->orderBy('created_at', 'desc')->get();
 
         return view('home',[
             'ventas' => $ventas,

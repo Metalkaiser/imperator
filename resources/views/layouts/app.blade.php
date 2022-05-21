@@ -5,7 +5,7 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>Imperator - Aplicación de inventario</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
         <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
         <script defer src="{{ asset('assets/sweetalert2.all.min.js') }}"></script>
@@ -18,7 +18,7 @@
         <link href="{{ asset('css/layout/header/menu/light.css') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('css/layout/brand/dark.css') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('css/layout/aside/dark.css') }}" rel="stylesheet" type="text/css"/>
-        <link rel="shortcut icon" href="assets/media/logos/favicon.ico"/>
+        <link rel="shortcut icon" href="{{ asset('imagenes/Icon.ico') }}"/>
         @yield('styles')
     </head>
 

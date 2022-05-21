@@ -20,7 +20,7 @@ class CompraController extends Controller
      */
     public function index()
     {
-        $compras = Compra::orderBy('created_at')->paginate(20);
+        $compras = Compra::orderBy('created_at', 'desc')->paginate(10);
         return view('compras.index', ['compras' => $compras]);
     }
 

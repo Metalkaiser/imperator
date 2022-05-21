@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('titulo')
+Ingrese la mercancía comprada
+@endsection
+
 @section('scripts')
 <script type="text/javascript">
 	function select(area, option) {
@@ -330,7 +334,6 @@
 <section>
 	<article>
 		<h3>Ingrese los datos de la mercancía nueva</h3>
-		<h4>Ingrese la mercancía comprada</h4>
 	</article>
 	<hr>
 	<article id="product-form">

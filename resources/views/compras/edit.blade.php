@@ -1,5 +1,18 @@
 @extends('layouts.app')
 
+@section('titulo')
+Editando compra de fecha: <?php 
+					$dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+					$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+ 
+					echo $dias[date('w',strtotime($compra->created_at))]
+					. ", " . date('d',strtotime($compra->created_at))
+					. " de "
+					. $meses[date('n',strtotime($compra->created_at))-1]
+					. " del " . date('Y',strtotime($compra->created_at));
+					 ?>
+@endsection
+
 @section('scripts')
 <script type="text/javascript">
 	function defectuosos(el){
@@ -10,25 +23,6 @@
 
 @section('content')
 <section>
-	<article>
-		<div>
-			<a href="/compras" class="btn btn-outline-danger">Volver atrás</a>
-		</div>
-	</article>
-</section>
-<section>
-	<article>
-		<h4>Editando compra de fecha: <?php 
-					$dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
-					$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
- 
-					echo $dias[date('w',strtotime($compra->created_at))]
-					. ", " . date('d',strtotime($compra->created_at))
-					. " de "
-					. $meses[date('n',strtotime($compra->created_at))-1]
-					. " del " . date('Y',strtotime($compra->created_at));
-					 ?></h4>
-	</article>
 	<article>
 		<table class="table table-hover table-sm">
 			<thead>
