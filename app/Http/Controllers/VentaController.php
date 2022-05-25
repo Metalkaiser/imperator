@@ -4,13 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Venta;
 use Illuminate\Http\Request;
-use App\Models\Producto;
-use App\Models\Promo;
 use App\Models\Pago_venta;
 use App\Models\Envio_venta;
 use App\Models\Talla_cantidad_venta;
-use App\Models\Plataforma;
-use App\Http\Controllers\ProductoController;
 
 class VentaController extends Controller
 {
@@ -21,7 +17,7 @@ class VentaController extends Controller
      */
     public function index()
     {
-        $ventas = Venta::orderBy('created_at')->paginate(20);
+        $ventas = Venta::orderBy('created_at', 'desc')->paginate(10);
         return view('ventas.index', ['ventas' => $ventas]);
     }
 

@@ -10,7 +10,6 @@ use App\Models\Pago_compra;
 use App\Models\Talla_cantidad_compra;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class CompraController extends Controller
 {
@@ -21,7 +20,7 @@ class CompraController extends Controller
      */
     public function index()
     {
-        $compras = Compra::orderBy('created_at')->paginate(20);
+        $compras = Compra::orderBy('created_at', 'desc')->paginate(10);
         return view('compras.index', ['compras' => $compras]);
     }
 

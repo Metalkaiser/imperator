@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Producto;
 use App\Models\Promo;
 use Illuminate\Support\Facades\Artisan;
+use Carbon\Carbon;
 use File;
 
 class ProductoController extends Controller
@@ -21,11 +22,6 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        /*
-        9: 1
-        10: 4
-        12: 1
-        */
         $data = $this->tallaslist();
         return view('inventario.index',$data);
     }
@@ -57,9 +53,32 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function show(Producto $producto)
+    public function show(Request $request)
     {
-        //
+        $tallasObj = $request->cantidades[$request->producto['id']];
+        $tallas = array_keys($tallasObj);
+        $cantidad = array_values($tallasObj);
+        $filas = "";
+        $talla = "";
+
+        foreach ($tallas as $index => $item) {
+            if ($item == 0) {
+                $talla = "Varias";
+            }else {
+                $talla = "".$item;
+            }
+            $filas = $filas . '<tr><th class="text-center">'.$talla.'</th>'
+            .'<th class="text-center">'.$cantidad[$index].'</th>'
+            .'</tr>';
+        }
+
+        $res = '<div><p>'.$request->producto['descripcion'].'</p>'
+        .'<table class="table table-hover table-sm"><thead>'
+        .'<tr><th scope="col">Talla</th>'
+        .'<th scope="col">Cantidad</th></tr>'
+        .'</thead><tbody>'.$filas.'</tbody></table></div>';
+
+        return response()->json($res);
     }
 
     /**
@@ -114,6 +133,16 @@ class ProductoController extends Controller
         //
     }
 
+    /* Vista para guardar un respaldo
+     * de la información en la base de datos.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function database()
+    {
+        return view('database');
+    }
+
 
     /* Llama al comando artisan para hacer un respaldo
      * de la información en la base de datos.
@@ -122,8 +151,15 @@ class ProductoController extends Controller
      */
     public function dbbackup()
     {
-        Artisan::call('database:backup');
-        return response()->json('Respaldo de base de datos exitoso');
+        $filename = "backup-" . Carbon::now()->format('Y-m-d_H:i:s') . ".sql";
+        $artisanCall = Artisan::call('database:backup '.$filename.'');
+        $file = public_path(). "/app/backup/".$filename."";
+
+        if (file_exists($file)) {
+            return \Response::download($file);
+        } else {
+            return response()->json('Ocurrió un error');
+        }
     }
 
     public function promos()

@@ -15,4 +15,5 @@ mix.js('resources/js/app.js', 'public/js')
     .react()
     .sass('resources/sass/app.scss', 'public/css')
     .copy('node_modules/sweetalert2/dist', 'public/assets')
+    .copy('node_modules/select2/dist', 'public/assets/select2')
     .extract();

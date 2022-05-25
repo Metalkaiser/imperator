@@ -17,15 +17,19 @@ use App\Http\Controllers\VentaController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('home');
+    return redirect()->route('panel');
 });
 
 Auth::routes(['register' => false]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/promociones', [App\Http\Controllers\ProductoController::class, 'promos'])->name('promos');
-Route::post('/promociones/crear', [App\Http\Controllers\ProductoController::class, 'nuevapromo']);
+Route::get('/panel', [App\Http\Controllers\HomeController::class, 'index'])->name('panel');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/promociones', [App\Http\Controllers\ProductoController::class, 'promos'])->name('promos');
+    Route::get('/db', [App\Http\Controllers\ProductoController::class, 'database'])->name('db');
+    Route::get('/respaldar', [App\Http\Controllers\ProductoController::class, 'dbbackup'])->name('respaldar');
+    Route::post('/promociones/crear', [App\Http\Controllers\ProductoController::class, 'nuevapromo']);
 
-Route::resource('inventario', ProductoController::class);
-Route::resource('compras', CompraController::class);
-Route::resource('ventas', VentaController::class);
+    Route::resource('inventario', ProductoController::class);
+    Route::resource('compras', CompraController::class);
+    Route::resource('ventas', VentaController::class);
+});
