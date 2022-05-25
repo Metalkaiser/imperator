@@ -30,13 +30,17 @@ Editando: {{$producto->nombre}}
 @endsection
 
 @section('content')
-<section class="row">
-	<article class="col-md-6 text-center">
-		<div><img src="<?php echo asset('imagenes/' . $producto->nombre) . '.jpg'; ?>" alt="{{$producto->nombre}}" style="width: 70%; max-height: 450px;"></div>
+<section class="row ">
+	<article class="col-md-6 text-center" style="position: relative;">
+		<div style="margin: 0; position: absolute; top: 50%; transform: translateY(-50%);">
+			<img src="<?php echo asset('imagenes/' . $producto->nombre) . '.jpg'; ?>" alt="{{$producto->nombre}}" style="width: 80%;">
+		</div>
 	</article>
-	<article class="col-md-6 text-center">
-		<h3>Edite la información que desee cambiar:</h3>
-		<form action="{{route('inventario.update',$producto->id)}}" method="POST" enctype="multipart/form-data">
+	<article class="col-md-6 text-center card card-custom">
+		<div class="card-header">
+			<h3 class="card-title">Edite la información que desee cambiar:</h3>
+		</div>
+		<form action="{{route('inventario.update',$producto->id)}}" method="POST" enctype="multipart/form-data" class="card-body">
 			@csrf
 			@method('put')
 			<div>
@@ -78,7 +82,7 @@ Editando: {{$producto->nombre}}
 				</div>
 			<div class="mt-5">
 				<button type="submit" class="btn btn-primary mt-5">Guardar cambios</button>
-				<a href="/inventario" class="btn btn-danger mt-5">Cancelar</a>
+				<a href="{{ url()->previous() }}" class="btn btn-danger mt-5">Cancelar</a>
 			</div>
 		</form>
 	</article>

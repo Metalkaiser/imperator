@@ -4,18 +4,6 @@
 Listado de compras
 @endsection
 
-@section('styles')
-<style type="text/css">
-	.swal-height {
-		height: 80vh;
-		width: 90%;
-	}
-	#swal2-html-container {
-		max-height: 90%;
-	}
-</style>
-@endsection
-
 @section('scripts')
 <script type="text/javascript">
 	function mostrar(compra){
@@ -29,7 +17,6 @@ Listado de compras
 			success: function(response){
 				Swal.fire({
 					title: 'Detalles de la compra',
-					customClass: 'swal-height',
 					width: '90%',
 					showCancelButton: true,
 					confirmButtonText: 'Editar',
@@ -50,7 +37,11 @@ Listado de compras
 			}
 		});
 	}
+	$(document).ready(function(){
+		$(".menu-item.menu-item-submenu").eq(2).addClass("menu-item-here");
+	});
 </script>
+<script src="{{ asset('js/buscar.js') }}"></script>
 @endsection
 
 @section('content')
@@ -67,7 +58,16 @@ Listado de compras
 <section>
 	<div class="card card-custom">
 		<div class="card-body">
-			<table class="table table-hover table-responsive-md table-sm">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<input class="form-control" type="text" id="buscainput" onkeyup="buscar()" placeholder="Buscar..">
+					</div>
+				</div>
+				<div class="col-md-4"></div>
+				<div class="col-md-4"></div>
+			</div>
+			<table class="table table-hover table-responsive-md table-sm" id="buscatable">
 				<thead>
 					<tr>
 						<th scope="col">Fecha</th>

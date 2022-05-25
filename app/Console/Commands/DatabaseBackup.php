@@ -13,7 +13,7 @@ class DatabaseBackup extends Command
      *
      * @var string
      */
-    protected $signature = 'database:backup';
+    protected $signature = 'database:backup {filename}';
 
     /**
      * The console command description.
@@ -39,7 +39,7 @@ class DatabaseBackup extends Command
      */
     public function handle()
     {
-        $filename = "backup-" . Carbon::now()->format('Y-m-d_H:i:s') . ".sql";
+        $filename = $this->argument('filename');
         // Cree una carpeta de respaldo y configura el permiso si no existe.
         $storageAt = public_path() . "/app/backup/";
         if(!File::exists($storageAt)) {

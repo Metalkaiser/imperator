@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Producto;
 use App\Models\Promo;
 use Illuminate\Support\Facades\Artisan;
+use Carbon\Carbon;
 use File;
 
 class ProductoController extends Controller
@@ -132,6 +133,16 @@ class ProductoController extends Controller
         //
     }
 
+    /* Vista para guardar un respaldo
+     * de la información en la base de datos.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function database()
+    {
+        return view('database');
+    }
+
 
     /* Llama al comando artisan para hacer un respaldo
      * de la información en la base de datos.
@@ -140,8 +151,15 @@ class ProductoController extends Controller
      */
     public function dbbackup()
     {
-        Artisan::call('database:backup');
-        return response()->json('Respaldo de base de datos exitoso');
+        $filename = "backup-" . Carbon::now()->format('Y-m-d_H:i:s') . ".sql";
+        $artisanCall = Artisan::call('database:backup '.$filename.'');
+        $file = public_path(). "/app/backup/".$filename."";
+
+        if (file_exists($file)) {
+            return \Response::download($file);
+        } else {
+            return response()->json('Ocurrió un error');
+        }
     }
 
     public function promos()

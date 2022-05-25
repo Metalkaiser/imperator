@@ -4,6 +4,14 @@
 Panel de control
 @endsection
 
+@section('scripts')
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".menu-item.menu-item-submenu").eq(0).addClass("menu-item-here");
+    });
+</script>
+@endsection
+
 @section('content')
 <section>
     <div class="row">

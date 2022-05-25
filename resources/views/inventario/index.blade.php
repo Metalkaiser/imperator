@@ -15,6 +15,37 @@ Lista de productos
 
 @section('scripts')
 <script type="text/javascript">
+	function buscar() {
+	  // Declare variables
+	  var input, filter, table, tr, trs, td, i, txtValue;
+	  var count = 0;
+	  input = document.getElementById("myInput");
+	  filter = input.value.toUpperCase();
+	  table = document.getElementById("myTable");
+	  trs = table.getElementsByTagName("tr");
+
+	  for (i = 1; i < trs.length; i++) {
+	    tr = $(trs).eq(i).children();
+
+	    for (var j = 1; j < (tr.length - 1); j++) {
+		    txtValue = $(tr).eq(j).text();
+		    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+		    	//tr[i].style.display = "";
+		    	count++;
+		    } else {
+		    	//tr[i].style.display = "none";
+		    }
+	    }
+	    if (count) {
+	    	$(trs).eq(i).show();
+	    } else {
+	    	$(trs).eq(i).hide();
+	    }
+	    count = 0;
+	  }
+	}
+
+
 	function mostrar(producto) {
 		let cantidades = <?php echo json_encode($cantidades); ?>;
 
@@ -53,6 +84,9 @@ Lista de productos
 			}
 		});
 	}
+	$(document).ready(function(){
+		$(".menu-item.menu-item-submenu").eq(1).addClass("menu-item-here");
+	});
 </script>
 @endsection
 
@@ -68,7 +102,16 @@ Lista de productos
 <section>
 	<div class="card card-custom">
 		<div class="card-body">
-			<table class="table table-hover table-responsive-md table-sm">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<input class="form-control" type="text" id="buscainput" onkeyup="buscar()" placeholder="Buscar..">
+					</div>
+				</div>
+				<div class="col-md-4"></div>
+				<div class="col-md-4"></div>
+			</div>
+			<table class="table table-hover table-responsive-md table-sm" id="buscatable">
 				<thead>
 					<tr>
 						<th scope="col">Imagen</th>
@@ -83,23 +126,23 @@ Lista de productos
 				<tbody>
 					@foreach($paginas as $producto)
 					<tr>
-						<th class="text-center">
+						<td class="text-center">
 							<img class="img-producto" src="<?php echo asset('imagenes/' . $producto->nombre) . '.jpg'; ?>" alt="{{$producto->nombre}}">
-						</th>
-						<th class="align-middle">{{$producto->codigo}}</th>
-						<th class="align-middle">{{$producto->nombre}}</th>
-						<th class="align-middle">
+						</td>
+						<td class="align-middle">{{$producto->codigo}}</td>
+						<td class="align-middle">{{$producto->nombre}}</td>
+						<td class="align-middle">
 							@if($tallas[$producto->codigo] == 0)
 							Varias
 							@else
 							{{$tallas[$producto->codigo]}}
 							@endif
-						</th>
-						<th class="align-middle">{{array_sum($cantidades[$producto->id])}}</th>
-						<th class="align-middle">{{$producto->precio}}</th>
-						<th class="align-middle">
+						</td>
+						<td class="align-middle">{{array_sum($cantidades[$producto->id])}}</td>
+						<td class="align-middle">{{$producto->precio}}</td>
+						<td class="align-middle">
 							<button class="btn btn-outline-info" type="button" onclick="mostrar({{$producto}})">Detalles</button>
-						</th>
+						</td>
 					</tr>
 					@endforeach
 				</tbody>

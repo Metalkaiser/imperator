@@ -148,6 +148,7 @@ Añadir venta
 
 		t_div.append(nuevo);
 		$(el).parent().siblings().children().eq(0).removeAttr("disabled");
+		$("select").not(".input-talla").select2();
 	}
 	//Crea las opciones para las tallas
 	function options(el){
@@ -186,9 +187,12 @@ Añadir venta
 		$(el).next().html("Quedan " + max + " unidades");
 		$(el).parents(".form-group").next().children().eq(2).children("input").val("");
 		$(el).parents(".form-group").next().children().eq(2).children("input").attr('max',max);
+		$("select").not(".input-talla").select2();
 	}
 	//Inician las validaciones
 	$(document).ready(function(){
+		$(".menu-item.menu-item-submenu").eq(3).addClass("menu-item-here");
+		$("select").not(".input-talla").select2();
 		$(":input").change(function(e){
 			$(e.target).css("background-color","");
 		});

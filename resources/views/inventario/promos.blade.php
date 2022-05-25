@@ -67,7 +67,6 @@ Promociones
 						'fin': formValues['fin']
 					},
 					success : function(response){
-						console.log(response);
                         Swal.fire({
 							icon: 'success',
 							title: 'Promoción creada exitosamente',
@@ -88,6 +87,9 @@ Promociones
 			}
 		})();
 	}
+	$(document).ready(function(){
+		$(".menu-item.menu-item-submenu").eq(1).addClass("menu-item-here");
+	});
 </script>
 @endsection
 

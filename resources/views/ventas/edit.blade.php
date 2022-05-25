@@ -129,7 +129,7 @@ Editando venta del cliente: {{$venta->nombre_cliente}}
 					</div>
 					<div class="form-group">
 						<button type="submit" class="btn btn-primary">Guardar cambios</button>
-						<a href="{{route('ventas.index')}}" class="btn btn-danger">Cancelar</a>
+						<a href="{{ url()->previous() }}" class="btn btn-danger">Cancelar</a>
 					</div>
 				</form>
 			</article>

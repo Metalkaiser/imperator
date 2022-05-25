@@ -50,7 +50,11 @@ Listado de ventas
 			}
 		});
 	}
+	$(document).ready(function(){
+		$(".menu-item.menu-item-submenu").eq(3).addClass("menu-item-here");
+	});
 </script>
+<script src="{{ asset('js/buscar.js') }}"></script>
 @endsection
 
 @section('content')
@@ -67,7 +71,16 @@ Listado de ventas
 <section>
 	<div class="card card-custom">
 		<div class="card-body">
-			<table class="table table-hover table-responsive-lg table-sm">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<input class="form-control" type="text" id="buscainput" onkeyup="buscar()" placeholder="Buscar..">
+					</div>
+				</div>
+				<div class="col-md-4"></div>
+				<div class="col-md-4"></div>
+			</div>
+			<table class="table table-hover table-responsive-lg table-sm" id="buscatable">
 				<thead>
 					<tr>
 						<th scope="col">Fecha</th>
