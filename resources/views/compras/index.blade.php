@@ -75,6 +75,7 @@ Listado de compras
 						<th scope="col">Tipo de pago</th>
 						<th scope="col">Empresa de envíos</th>
 						<th scope="col">Moneda</th>
+						<th scope="col">Costo de envío ($)</th>
 						<th scope="col">Estado de la compra</th>
 						<th scope="col"></th>
 					</tr>
@@ -96,6 +97,11 @@ Listado de compras
 						<th class="align-middle">{{$compra->pagos->tipo}}</th>
 						<th class="align-middle">{{$compra->carrier->nombre}}</th>
 						<th class="align-middle">{{$compra->pagos->moneda}}</th>
+						<th class="align-middle"><?php if ($compra->costo_envio == "") {
+							echo "Costo sin declarar";
+						}else {
+							echo $compra->costo_envio;
+						} ?></th>
 						<th class="align-middle"><?php 
 						switch ($compra->status) {
 							case 'Tienda':

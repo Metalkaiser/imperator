@@ -215,6 +215,7 @@ class CompraController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //return $request;
         $compra = Compra::find($id);
         if (isset($request->talla)) {
             foreach ($request->talla as $key => $value) {
@@ -225,6 +226,9 @@ class CompraController extends Controller
                 $talla_defectuosa->defectuosos = $request->defectuosos[$key];
                 $talla_defectuosa->save();
             }
+        }
+        if (isset($request->costo)) {
+            $compra->costo_envio = $request->costo;
         }
         $compra->status = $request->status;
         $compra->save();

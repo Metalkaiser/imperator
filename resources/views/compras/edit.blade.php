@@ -88,6 +88,31 @@ Editando compra de fecha: <?php
 					<div class="col-md-4"></div>
 					<div class="col-md-4">
 						<div class="form-group">
+							<label>Costo de envío desde Miami hasta la tienda</label>
+							@switch($compra->status)
+							@case("China")
+							<input class="form-control" type="text" disabled placeholder="Opción no disponible">
+							@break
+							@case("Miami")
+							<input class="form-control" type="text" name="costo" placeholder="Costo de envío" <?php if ($compra->costo_envio != "") {
+								echo "value='".$compra->costo_envio."'";
+							} ?>>
+							@break
+							@case("Tienda")
+							<input class="form-control" type="text" name="costo" placeholder="Costo de envío (Miami + tienda)" <?php if ($compra->costo_envio != "") {
+								echo "value='".$compra->costo_envio."'";
+							} ?>>
+							@break
+							@endswitch
+							</select>
+						</div>
+					</div>
+					<div class="col-md-4"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-4"></div>
+					<div class="col-md-4">
+						<div class="form-group">
 							<label for="status">Estado de la compra</label>
 							<select class="form-control" id="status" name="status" required>
 							@switch($compra->status)

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,12 +23,13 @@ Route::get('/', function () {
 
 Auth::routes(['register' => false]);
 
-Route::get('/panel', [App\Http\Controllers\HomeController::class, 'index'])->name('panel');
+Route::get('/panel', [HomeController::class, 'index'])->name('panel');
 Route::middleware(['auth'])->group(function () {
-    Route::get('/promociones', [App\Http\Controllers\ProductoController::class, 'promos'])->name('promos');
-    Route::get('/db', [App\Http\Controllers\ProductoController::class, 'database'])->name('db');
-    Route::get('/respaldar', [App\Http\Controllers\ProductoController::class, 'dbbackup'])->name('respaldar');
-    Route::post('/promociones/crear', [App\Http\Controllers\ProductoController::class, 'nuevapromo']);
+    Route::get('/promociones', [ProductoController::class, 'promos'])->name('promos');
+    Route::get('/db', [ProductoController::class, 'database'])->name('db');
+    Route::get('/respaldar', [ProductoController::class, 'dbbackup'])->name('respaldar');
+    Route::post('/promociones/crear', [ProductoController::class, 'nuevapromo']);
+    Route::get('/costos', [HomeController::class, 'costos']);
 
     Route::resource('inventario', ProductoController::class);
     Route::resource('compras', CompraController::class);
