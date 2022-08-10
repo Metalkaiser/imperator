@@ -23,6 +23,7 @@ class ProductoController extends Controller
     public function index()
     {
         $data = $this->tallaslist();
+        //return $data;
         return view('inventario.index',$data);
     }
 
@@ -67,9 +68,11 @@ class ProductoController extends Controller
             }else {
                 $talla = "".$item;
             }
-            $filas = $filas . '<tr><th class="text-center">'.$talla.'</th>'
-            .'<th class="text-center">'.$cantidad[$index].'</th>'
-            .'</tr>';
+            if ($cantidad[$index] > 0) {
+                $filas = $filas . '<tr><th class="text-center">'.$talla.'</th>'
+                .'<th class="text-center">'.$cantidad[$index].'</th>'
+                .'</tr>';
+            }
         }
 
         $res = '<div><p>'.$request->producto['descripcion'].'</p>'

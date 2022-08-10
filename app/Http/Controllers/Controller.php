@@ -28,16 +28,28 @@ class Controller extends BaseController
             array_push($c_ids, $coincidencia->compras);
         }
         $promos = Promo::all();
-        $pagina = Producto::orderBy('nombre')->paginate(10);
+        $pagina = Producto::whereIn('id',$ids)->orderBy('nombre')->paginate(10);
         $lista = Producto::orderBy('nombre')->get();
         $arrTalla = $cantidadTallas = $optTallas = array();
 
         /*  Comienza Listado de tallas por producto    */
         foreach ($lista as $indice => $productos) {     //Cada registro en la tabla productos
+            if (!isset($arrTalla[$productos->codigo])) {
+                $arrTalla[$productos->codigo] = [];
+            }
+            if (!isset($optTallas[$productos->id])) {
+                $optTallas[$productos->id] = [];
+            }
             foreach ($productos->compras as $key => $value) {   //Cada compra por producto
                 //Se definen las tallas de cada producto
-                $arrTalla[$productos->codigo][$key] = $value->talla;
-                $optTallas[$productos->id][$key] = $value->talla;
+
+                //$arrTalla[$productos->codigo][$key] = $value->talla;
+                //$optTallas[$productos->id][$key] = $value->talla;
+                array_push($arrTalla[$productos->codigo], $value->talla);
+                array_push($optTallas[$productos->id], $value->talla);
+
+
+
                 if (array_key_exists($productos->id, $cantidadTallas) && array_key_exists($value->talla, $cantidadTallas[$productos->id])) {
 
                     if (in_array($value->producto_id, $ids) && in_array($value->compra_id, $c_ids)) {
@@ -61,18 +73,19 @@ class Controller extends BaseController
                 }
             }
 
-            //Comienza If de prueba
-                if ($productos->compras == "[]") {
-                    $arrTalla = $cantidadTallas = array();
-                }else {
-                    $arrTalla[$productos->codigo] = array_unique($arrTalla[$productos->codigo]);
-                    $optTallas[$productos->id] = array_unique($optTallas[$productos->id]);
-                    sort($optTallas[$productos->id]);
-                    sort($arrTalla[$productos->codigo]);
-                    $arrTalla[$productos->codigo] = implode(",", $arrTalla[$productos->codigo]);    
-                }
-            //Termina If de prueba
         /*  Termina Listado de tallas por producto    */
+        }
+        if ($arrTalla != "[]") {
+            foreach ($arrTalla as $key => $value) {
+                    $arrTalla[$key] = array_unique($arrTalla[$key]);
+                    sort($arrTalla[$key]);
+
+                    $arrTalla[$key] = implode(",", $arrTalla[$key]);    
+            }
+            foreach ($optTallas as $key => $value) {
+                $optTallas[$key] = array_unique($optTallas[$productos->id]);
+                sort($optTallas[$key]);   
+            }
         }
 
         return [
